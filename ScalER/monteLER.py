@@ -193,7 +193,7 @@ class stimLERcalc:
             samples = sinter.collect(
                 num_workers=os.cpu_count(),
                 max_shots=samplebudget,
-                max_errors=100,
+                max_errors=self._MIN_NUM_LE_EVENT,
                 tasks=[mytask],
                 decoders=['pymatching'],
             )
