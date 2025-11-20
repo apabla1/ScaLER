@@ -1,5 +1,6 @@
 [build-system]
 requires = [
+    "stim",       # or whichever version you require
     "setuptools", 
     "wheel",
     "pybind11>=2.11"
