@@ -1,9 +1,9 @@
 import stim
 import pymatching
-from ScaLER.interface import *
+from .interface import *
 from pathlib import Path
 import numpy as np
-from ScaLER.stimparser import rewrite_stim_code
+from .stimparser import rewrite_stim_code
 
 
 
@@ -549,7 +549,7 @@ class CliffordCircuit:
 
 
 
-from QEPG.QEPG import return_samples,return_samples_many_weights,return_detector_matrix
+from .qepg import return_samples,return_samples_many_weights,return_detector_matrix
 
 
 import math

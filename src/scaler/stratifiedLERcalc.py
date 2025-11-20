@@ -1,6 +1,6 @@
 
-from QEPG.QEPG import return_samples,return_samples_many_weights,return_detector_matrix, return_samples_many_weights_separate_obs, compile_QEPG, return_samples_many_weights_separate_obs_with_QEPG
-from ScaLER.clifford import *
+from .qepg import return_samples,return_samples_many_weights,return_detector_matrix, return_samples_many_weights_separate_obs, compile_QEPG, return_samples_many_weights_separate_obs_with_QEPG
+from .clifford import *
 import math
 import pymatching
 import time

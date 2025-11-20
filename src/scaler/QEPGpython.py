@@ -1,4 +1,4 @@
-from ScaLER.clifford import *
+from .clifford import *
 
 
 

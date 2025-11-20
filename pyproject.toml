@@ -29,6 +29,7 @@ dependencies = [
     "sinter",
     "matplotlib",
     "numpy",
+    "scipy"
 ]
 
 
