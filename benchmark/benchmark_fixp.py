@@ -1,7 +1,7 @@
-from scaler.LERcalculator import *
-from scaler.monteLER import stimLERcalc
-from scaler import stratified_Scurve_LERcalc
-from scaler.stratifiedLERcalc import *
+from scalerqec.LERcalculator import *
+from scalerqec.monteLER import stimLERcalc
+from scalerqec import stratified_Scurve_LERcalc
+from scalerqec.stratifiedLERcalc import *
 
 
 p=0.001

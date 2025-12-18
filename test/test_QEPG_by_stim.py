@@ -1,7 +1,7 @@
 import stim
 import numpy as np
-from scaler.clifford import *
-from scaler.stimparser import *
+from scalerqec.clifford import *
+from scalerqec.stimparser import *
 from QEPG.QEPG import return_detector_matrix
 import random
 

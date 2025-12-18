@@ -713,4 +713,3 @@ def get_circuit():
 
 if __name__ == "__main__":
     stratified_sampling()
-#sample_time()

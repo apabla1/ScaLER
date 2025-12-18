@@ -215,7 +215,7 @@ std::vector<std::vector<bool>> return_samples_with_fixed_QEPG(const QEPG::QEPG& 
 
 
 py::array_t<bool> return_samples_numpy(const std::string& prog_str,size_t weight, size_t shots){
-   clifford::cliffordcircuit c;
+    clifford::cliffordcircuit c;
     c.compile_from_rewrited_stim_string(prog_str);
 
     QEPG::QEPG graph(c,c.get_num_detector(),c.get_num_noise());

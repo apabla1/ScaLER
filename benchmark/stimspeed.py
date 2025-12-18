@@ -1,6 +1,6 @@
 import stim
 import pymatching
-from scaler.LERcalculator import *
+from scalerqec.LERcalculator import *
 import time
 
 
