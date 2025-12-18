@@ -1,4 +1,4 @@
-# <img src="Figures/logo.png" alt="ScaLERQEC logo" width="100" style="vertical-align: middle;"/> ScaLERQEC
+# <img src="Figures/logo.png" alt="ScaLERQEC logo" width="200" style="vertical-align: middle;"/> ScaLERQEC
 
 ScaLERQEC is a scalable framework for estimating logical error rates (LER) of quantum error-correcting (QEC) circuits at scale.
 It combines optimized C++ backends (QEPG) with high-level Python interfaces for QEC experimentation, benchmarking, symbolic analysis, and Monte-Carlo fault injection.
