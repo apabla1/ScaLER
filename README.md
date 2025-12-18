@@ -160,6 +160,7 @@ for w in range(1, num_noise):
 - [ ] SIMD support and compare with STIM
 - [ ] Visualize results better and visualize QEPG graph
 - [ ] Python interface to construct QEC circuit
+- [ ] Constructing and testing magic state distillation/Cultivation
 - [x] Add cross-platform installation support (including macOS)
 - [ ] Write full documentation
 - [ ] Implement dynamic-circuit support(Compatible with IBM)
