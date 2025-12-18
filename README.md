@@ -1,6 +1,6 @@
 # ScaLERQEC
 
-| <img src="Figure/logo.png" alt="Example circuit diagram" width="200"/> |
+| <img src="Figures/logo.png" alt="Example circuit diagram" width="200"/> |
 |:--------------------------------------------------------------------------:|
 | *Figure 1: Out logo.*      
 
