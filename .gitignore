@@ -39,3 +39,4 @@ tmp.py
 *.egg-info/
 *.stim
 !Figures/*.pdf
+!Figures/*.png
