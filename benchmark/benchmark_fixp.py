@@ -1,9 +1,10 @@
 from scalerqec.LERcalculator import *
-from scalerqec.monteLER import stimLERcalc
+from scalerqec.Monte.monteLER import stimLERcalc
 from scalerqec import stratified_Scurve_LERcalc
-from scalerqec.stratifiedLERcalc import *
+from scalerqec.Stratified.stratifiedLERcalc import *
 from pathlib import Path
 home = Path(__file__).resolve().parent.parent
+
 p=0.001
 
 def generate_all_repetition_benchmark():

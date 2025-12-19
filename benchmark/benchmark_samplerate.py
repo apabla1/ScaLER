@@ -1,6 +1,6 @@
 from scalerqec.qepg import return_samples, return_samples_many_weights, return_detector_matrix, return_samples_many_weights_separate_obs, return_samples_numpy, compile_QEPG, return_samples_many_weights_separate_obs_with_QEPG
-from scalerqec.clifford import *
-from scalerqec.stimparser import *
+from scalerqec.Clifford.clifford import *
+from scalerqec.Clifford.stimparser import *
 from time import time, perf_counter
 import numpy as np
 import matplotlib.pyplot as plt
@@ -14,11 +14,10 @@ def test_compile_speed(distance):
     circuit.set_error_rate(p)
     stim_circuit=stim.Circuit.generated("surface_code:rotated_memory_z",rounds=distance*3,distance=distance).flattened()
     stim_circuit=rewrite_stim_code(str(stim_circuit))
-    circuit.set_stim_str(stim_circuit)
     circuit.compile_from_stim_circuit_str(stim_circuit) 
 
-    new_stim_circuit=circuit.get_stim_circuit()      
-    total_noise=circuit.get_totalnoise()
+    new_stim_circuit=circuit.stimcircuit     
+    total_noise=circuit.totalnoise
     string_program=str(new_stim_circuit)
     current_time = time()
     g=compile_QEPG(string_program)
@@ -41,10 +40,9 @@ def test_samplerate(filepath):
 
     circuit=CliffordCircuit(2)
     stim_circuit=rewrite_stim_code(stim_str)
-    circuit.set_stim_str(stim_circuit)
     circuit.compile_from_stim_circuit_str(stim_circuit)           
-    new_stim_circuit=circuit.get_stim_circuit()        
-    total_noise=circuit.get_totalnoise()
+    new_stim_circuit=circuit.stimcircuit       
+    total_noise=circuit.totalnoise
 
     average_weight=int(total_noise*p)
     if average_weight==0:
@@ -151,19 +149,22 @@ def plot_speed_comparison():
     # Layout adjustment
     fig.tight_layout()
 
-    # Show figure
-    plt.show()
+    # Save the annotated figure
+    output_path = 'sampling_time_comparison_annotated.png'
+    fig.savefig(output_path, dpi=300)
+
+    output_path
 
 
 
 if __name__ == "__main__":
     #test_samplerate(11)
     #test_compile_speed(13)
-    # fileroot="C:/Users/username/Documents/Sampling/stimprograms/"
-    # for file in all_files:
-    #     filepath=fileroot+file
-    #     test_samplerate(filepath)
-    plot_speed_comparison()
+    fileroot="../benchmarksuits/"
+    for file in all_files:
+        filepath=fileroot+file
+        test_samplerate(filepath)
+    #plot_speed_comparison()
     # test_samplerate(3)
 
     # test_samplerate(5)
@@ -177,5 +178,3 @@ if __name__ == "__main__":
     # test_samplerate(13)
 
     # test_samplerate(15)
-
-

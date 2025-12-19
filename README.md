@@ -62,14 +62,12 @@ scalerqec/qepg.*.so or .pyd
 After installation, the package structure is:
 ```bash
 scalerqec/
-    qepg               # compiled C++ backend (pybind11)
-    clifford.py
-    LERcalculator.py
-    stratifiedScurveLER.py
-    stimparser.py
-    symbolicLER.py
-    symbolicNaive.py
-    monteLER.py
+    qepg               # compiled QEPG graph and samping method from C++ backend (by pybind11)
+    Clifford/          # Clifford circuit
+    Monte/             # Monte Carlo sampling method
+    QEC/               # High-level description of quantum error correction circuit 
+    Stratified/        # Stratified fault injection
+    Symbolic/          # Symbolic method
     ...
 ```
 
@@ -77,8 +75,16 @@ scalerqec/
 1️⃣ Main method: Test Logical by Statefied fault-sampling and curve fitting:
 
 
+
+<p align="center">
+  <img src="Figures/diagra.png" alt="diag" width="550"/>
+</p>
+<p align="center">
+  <em>Figure 2: Diagram for the main method in ScaLERQEC</em>
+</p> 
+
 ```python
-from scalerqec import stratified_Scurve_LERcalc
+from scalerqec.Stratified import stratified_Scurve_LERcalc
 
 d=7 #Set the code distance
 p = 0.001 #Set the physcial error rate
@@ -110,6 +116,16 @@ testinstance.calculate_LER_from_file(stim_path, p, 0, figname, titlename, repeat
 
 2️⃣ Using the C++ QEPG Backend from Python
 
+
+<p align="center">
+  <img src="Figures/prop.png" alt="QEPG" width="350"/>
+</p>
+<p align="center">
+  <em>Figure 2: Illustration of how we compile a QEPG graph in ScaLERQEC.</em>
+</p> 
+
+
+
 ```python
 import scalerqec.qepg as qepg
 
@@ -140,7 +156,7 @@ with open("resultMonte.txt", "w") as f, redirect_stdout(f):
 
 
 ```python
-from scalerqec.symbolicLER import symbolicLER
+from scalerqec.Symbolic.symbolicLER import symbolicLER
 
 calc = symbolicLER(0.001)
 filepath = "path/to/circuit"
@@ -156,16 +172,18 @@ for w in range(1, num_noise):
 📌 TODO (Roadmap)
 
 - [x] Support installation via `pip install`
+- [ ] Get rid of Boost package, use binary representation
 - [ ] Support LDPC code and LDPC code decoder
+- [ ] Compatible with Qiskit
 - [ ] SIMD support and compare with STIM
 - [ ] Visualize results better and visualize QEPG graph
 - [ ] HotSpot analysis(What is the reason for logical error?)
-- [ ] Python interface to construct QEC circuit
+- [x] Python interface to construct QEC circuit
 - [ ] Constructing and testing magic state distillation/Cultivation
 - [x] Add cross-platform installation support (including macOS)
 - [ ] Write full documentation
 - [ ] Implement dynamic-circuit support(Compatible with IBM)
-- [ ] Higher-level, easier interface to generate QEC program
+- [x] Higher-level, easier interface to generate QEC program
 - [ ] Support testing code switching such as lattice surgery, LDPC code switching protocol
 - [ ] Add more realistic noise models(Decoherence noise, Correlated noise)
 - [ ] Support injecting quantum errors by type(Hook Error, Gate error, Propagated error, etc)
