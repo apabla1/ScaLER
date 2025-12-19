@@ -129,10 +129,10 @@ class symbolicLER:
             stim_str = f.read()
         
 
-        self._cliffordcircuit.set_error_rate(self._error_rate)  
+        self._cliffordcircuit.error_rate = self._error_rate  
         self._cliffordcircuit.compile_from_stim_circuit_str(stim_str)
-        self._num_noise = self._cliffordcircuit.get_totalnoise()
-        self._num_detector=len(self._cliffordcircuit.get_parityMatchGroup())
+        self._num_noise = self._cliffordcircuit.totalnoise
+        self._num_detector=len(self._cliffordcircuit.parityMatchGroup)
 
         self._total_detector_outcome=(1<<(self._num_detector+1))
 
@@ -147,7 +147,7 @@ class symbolicLER:
         _all_predictions store all prediction by matching
         """
         # Configure a decoder using the circuit.
-        stimcircuit=self._cliffordcircuit.get_stim_circuit()
+        stimcircuit=self._cliffordcircuit.stimcircuit
         detector_error_model = stimcircuit.detector_error_model(decompose_errors=False)
         matcher = pymatching.Matching.from_detector_error_model(detector_error_model)
 

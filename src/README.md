@@ -76,7 +76,9 @@ User can construct any stabilizer code circuit by the following provided interfa
 
 ```python
 from scalerqec.QEC.qeccircuit import QECStab
+from scalerqec.QEC.noisemodel import NoiseModel
 qeccirc= QECStab(n=5,k=1,d=3)
+noise_model = NoiseModel(0.001) #Set the noise model
 #Specify your stabilizers
 # Stabilizer generators
 qeccirc.add_stab("XZZXI")
@@ -88,7 +90,8 @@ qeccirc.set_logical_Z(0, "ZZZZZ")
 qeccirc.scheme="Standard" 
 qeccirc.rounds=2
 qeccirc.construct_circuit()
-stim_circuit = qeccirc.stimcirc
+new_circuit=noise_model.reconstruct_clifford_circuit(qeccirc.circuit) 
+stim_circuit = new_circuit.stimcircuit
 print(stim_circuit)
 ```
 

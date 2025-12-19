@@ -139,7 +139,7 @@ print(samples)
 3️⃣ Running Monte Carlo Fault-Injection
 
 ```python
-from scalerqec.monteLER import stimLERcalc
+from scalerqec.Monte.monteLER import stimLERcalc
 from contextlib import redirect_stdout
 
 p = 0.001

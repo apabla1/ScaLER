@@ -75,7 +75,7 @@ class stimLERcalc:
 
     def calculate_LER_from_my_random_sampler(self, samplebudget, filepath, pvalue, repeat=1):
         circuit=CliffordCircuit(2)
-        circuit.set_error_rate(pvalue)
+        circuit.error_rate=pvalue
         self._samplebudget=samplebudget
 
         stim_str=""
@@ -86,7 +86,7 @@ class stimLERcalc:
         stim_circuit=rewrite_stim_code(stim_str)
         circuit.set_stim_str(stim_circuit)
         circuit.compile_from_stim_circuit_str(stim_circuit)           
-        new_stim_circuit=circuit.get_stim_circuit()      
+        new_stim_circuit=circuit.stimcircuit      
 
 
         detector_error_model = new_stim_circuit.detector_error_model(decompose_errors=True)
@@ -170,7 +170,7 @@ class stimLERcalc:
         stim_circuit=rewrite_stim_code(stim_str)
         circuit.set_stim_str(stim_circuit)
         circuit.compile_from_stim_circuit_str(stim_circuit)           
-        new_stim_circuit=circuit.get_stim_circuit()      
+        new_stim_circuit=circuit.stimcircuit      
 
              
         Ler_list=[]
@@ -233,7 +233,7 @@ class stimLERcalc:
 
     def calculate_LER_from_file(self,samplebudget,filepath,pvalue, repeat=1):
         circuit=CliffordCircuit(2)
-        circuit.set_error_rate(pvalue)
+        circuit.error_rate=pvalue
         self._samplebudget=samplebudget
 
         stim_str=""
@@ -243,7 +243,7 @@ class stimLERcalc:
         stim_circuit=rewrite_stim_code(stim_str)
         circuit.set_stim_str(stim_circuit)
         circuit.compile_from_stim_circuit_str(stim_circuit)           
-        new_stim_circuit=circuit.get_stim_circuit()      
+        new_stim_circuit=circuit.stimcircuit   
 
         
         sampler = new_stim_circuit.compile_detector_sampler()
