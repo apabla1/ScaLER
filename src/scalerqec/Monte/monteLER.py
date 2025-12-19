@@ -1,6 +1,6 @@
-from Clifford.clifford import *
+from ..Clifford.clifford import *
 import pymatching
-from Clifford.stimparser import *
+from ..Clifford.stimparser import *
 import time
 import os
 from contextlib import redirect_stdout

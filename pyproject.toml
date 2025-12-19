@@ -12,7 +12,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 
-name = "scaler"
+name = "scalerqec"
 version = "0.0.1"
 description = "ScaLER: Scalable testing of logical error rate for quantum error correction circuits"
 authors = [
@@ -34,4 +34,4 @@ dependencies = [
 
 
 [project.urls]
-Homepage = "https://github.com/yezhuoyang/ScaLER"
+Homepage = "https://github.com/yezhuoyang/ScaLERQEC"

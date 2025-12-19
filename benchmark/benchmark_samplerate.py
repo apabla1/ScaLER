@@ -162,11 +162,11 @@ def plot_speed_comparison():
 if __name__ == "__main__":
     #test_samplerate(11)
     #test_compile_speed(13)
-    # fileroot="C:/Users/username/Documents/Sampling/stimprograms/"
-    # for file in all_files:
-    #     filepath=fileroot+file
-    #     test_samplerate(filepath)
-    plot_speed_comparison()
+    fileroot="../benchmarksuits/"
+    for file in all_files:
+        filepath=fileroot+file
+        test_samplerate(filepath)
+    #plot_speed_comparison()
     # test_samplerate(3)
 
     # test_samplerate(5)

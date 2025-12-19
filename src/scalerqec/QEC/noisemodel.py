@@ -1,6 +1,6 @@
 #A Noise model class, the purpose is to rewrite stim program and Clifford circuit to support noise model
 #Rewrite all stim program/Clifford circuit to support the noise model
-from Clifford.clifford import *
+from ..Clifford.clifford import *
 from enum import Enum
 
 class ErrorType(Enum):

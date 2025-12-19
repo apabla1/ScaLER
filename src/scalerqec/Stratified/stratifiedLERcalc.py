@@ -1,6 +1,6 @@
 
 from ..qepg import return_samples_many_weights_separate_obs, compile_QEPG, return_samples_many_weights_separate_obs_with_QEPG
-from Clifford.clifford import *
+from ..Clifford.clifford import *
 import math
 import pymatching
 import time
