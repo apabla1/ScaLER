@@ -77,7 +77,7 @@ scalerqec/
 
 
 <p align="center">
-  <img src="Figures/diagra.png" alt="diag" width="450"/>
+  <img src="Figures/diagra.png" alt="diag" width="550"/>
 </p>
 <p align="center">
   <em>Figure 2: Diagram for the main method in ScaLERQEC</em>
