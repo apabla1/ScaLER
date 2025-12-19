@@ -157,6 +157,7 @@ for w in range(1, num_noise):
 
 - [x] Support installation via `pip install`
 - [ ] Support LDPC code and LDPC code decoder
+- [ ] Compatible with Qiskit
 - [ ] SIMD support and compare with STIM
 - [ ] Visualize results better and visualize QEPG graph
 - [ ] HotSpot analysis(What is the reason for logical error?)

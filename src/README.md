@@ -25,7 +25,7 @@ To compile the QEPG graph for any customized circuit and get samples, scaler pro
 
 
 ```python
-from scaler.qepg import compile_QEPG, return_samples_many_weights_separate_obs_with_QEPG
+from scalerqec.qepg import compile_QEPG, return_samples_many_weights_separate_obs_with_QEPG
 import pymatching
 import numpy as np
 
@@ -75,6 +75,7 @@ User can construct any stabilizer code circuit by the following provided interfa
 
 
 ```python
+from scalerqec.qeccircuit import QECStab
 qeccirc= QECStab(n=5,k=1,d=3)
 #Specify your stabilizers
 # Stabilizer generators

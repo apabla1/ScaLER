@@ -11,7 +11,7 @@ from .stratifiedScurveLER import stratified_Scurve_LERcalc
 from .symbolicLER import symbolicLER
 from .monteLER import stimLERcalc
 from .clifford import CliffordCircuit
-
+from .qeccircuit import QECStab
 
 
 __all__ = [
@@ -21,4 +21,5 @@ __all__ = [
     "stimLERcalc",
     "CliffordCircuit",
     "qepg",
+    "QECStab"
 ]

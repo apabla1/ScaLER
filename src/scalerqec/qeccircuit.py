@@ -3,6 +3,8 @@
 
 from enum import Enum
 from clifford import CliffordCircuit
+import numpy as np
+from noisemodel import NoiseModel
 
 class SCHEME(Enum):
     STANDARD = 0
@@ -65,8 +67,8 @@ class StabPropInstruction(IRInstruction):
         self._is_observable = is_observable
         self._observable_index = observable_index
 
-
-    def get_round(self) -> int:
+    @property
+    def round(self) -> int:
         """
         Get the round number of the stabilizer propagation.
 
@@ -112,7 +114,8 @@ class StabPropInstruction(IRInstruction):
         else:
             return f"{self._dest} = Prop[r={self._round}, s={self._stabindex}] {self._stab}"
 
-    def get_dest(self) -> str:
+    @property
+    def dest(self) -> str:
         """
         Get the destination qubit/observable/detector from the instruction.
 
@@ -121,8 +124,8 @@ class StabPropInstruction(IRInstruction):
         """
         return self._dest
 
-
-    def get_stab(self) -> str:
+    @property
+    def stab(self) -> str:
         """
         Get the stabilizer from the instruction.
 
@@ -145,10 +148,12 @@ class ParityInstruction(IRInstruction):
     def __str__(self) -> str:
         return f"{self._dest} = Parity {' '.join(self._args)}"
 
-    def get_dest(self) -> str:
+    @property
+    def dest(self) -> str:
         return self._dest
 
-    def get_args(self) -> list[str]:
+    @property
+    def args(self) -> list[str]:
         return self._args
 
 
@@ -229,9 +234,73 @@ class QECStab:
         self._rounds = 3*d
         #Define the k different logical Z operators
         self._logicalZ = {}
+        self._paritymatrix = None
+        self._noisemodel = None
 
 
-    def get_circuit(self) -> None:
+    @property
+    def noisemodel(self) -> NoiseModel:
+        """
+        Get the noise model associated with the QECC.
+
+        Returns:
+            NoiseModel: The noise model.
+        """
+        return self._noisemodel
+    
+
+    @noisemodel.setter
+    def noisemodel(self, noisemodel: NoiseModel) -> None:
+        """
+        Set the noise model associated with the QECC.
+
+        Args:
+            noisemodel (NoiseModel): The noise model to set.
+        """
+        self._noisemodel = noisemodel
+
+
+
+    def init_by_parity_check_matrix(self, paritymatrix: np.ndarray) -> None:
+        """
+        Initialize the QECC stabilizer structures using a given parity check matrix.
+
+        Args:
+            paritymatrix (np.ndarray): The parity check matrix.
+        """
+        self._paritymatrix = paritymatrix
+        self._n = paritymatrix.shape[1]
+        self._k = self._n - paritymatrix.shape[0]
+        self._stabs = []
+        pass
+
+
+
+    def construct_parity_check_matrix(self) -> None:
+        """
+        Construct the standard XZ parity check matrix for the quantum error-correcting code.
+
+        Returns:
+            The parity check matrix.
+        """
+        pass
+
+
+
+    def get_parity_check_matrix(self) -> None:
+        """
+        Get the standard XZ parity check matrix for the quantum error-correcting code.
+
+        Returns:
+            The parity check matrix.
+        """
+        return self._paritymatrix
+
+
+
+
+    @property
+    def circuit(self) -> None:
         """
         Get the Clifford circuit for the quantum error-correcting code.
 
@@ -241,8 +310,8 @@ class QECStab:
         return self._circuit
 
 
-
-    def get_stim_circuit(self) -> None:
+    @property
+    def stimcirc(self) -> None:
         """
         Get the stimulus circuit for the quantum error-correcting code.
 
@@ -265,8 +334,20 @@ class QECStab:
 
         self._logicalZ[index] = logicalZ
 
+    
+    @property
+    def rounds(self) -> int:
+        """
+        Get the number of error correction rounds.
 
-    def set_rounds(self, rounds: int) -> None:
+        Returns:
+            int: The number of rounds.
+        """
+        return self._rounds
+
+
+    @rounds.setter
+    def rounds(self, rounds: int) -> None:
         """
         Set the number of error correction rounds.
 
@@ -289,7 +370,19 @@ class QECStab:
         self._stabs.append(stab)
 
 
-    def set_scheme(self, scheme: str) -> None:
+    @property
+    def scheme(self) -> SCHEME:
+        """
+        Get the error correction scheme for the code.
+
+        Returns:
+            SCHEME: The error correction scheme.
+        """
+        return self._scheme
+
+
+    @scheme.setter
+    def scheme(self, scheme: str) -> None:
         """
         Set the error correction scheme for the code.
 
@@ -308,6 +401,7 @@ class QECStab:
             case _:
                 raise ValueError(f"Unknown scheme: {scheme}")
             
+
     def construct_circuit(self):
         """
         Construct the quantum error-correcting circuit based on the stabilizers and scheme.
@@ -328,6 +422,9 @@ class QECStab:
             case SCHEME.STANDARD:
                 self.construct_IR_standard_scheme()
                 self.compile_stim_circuit_from_IR_standard()
+                if self._noisemodel is not None:
+                    self._circuit = self._noisemodel.reconstruct_clifford_circuit(self._circuit)
+                    self._stimcirc = self._circuit._stimcircuit
             case _:
                 raise NotImplementedError(f"Scheme {self._scheme} not implemented yet.")
 
@@ -400,8 +497,8 @@ class QECStab:
         current_measure_index = 0
         for irinst in self._IRList:
             if isinstance(irinst, StabPropInstruction):
-                stab = irinst.get_stab()
-                dest_index = int(irinst.get_dest()[1:])
+                stab = irinst.stab
+                dest_index = int(irinst.dest[1:])
                 if irinst.is_observable():
                     helper_qubit_index = self._n + irinst.get_stabindex()
                 else:
@@ -422,26 +519,25 @@ class QECStab:
                             raise NotImplementedError("Y parity propagation not supported.")
                         
                 self._circuit.add_measurement(helper_qubit_index)
-                dest_to_measure_index[irinst.get_dest()] = current_measure_index
+                dest_to_measure_index[irinst.dest] = current_measure_index
                 current_measure_index += 1
 
             elif isinstance(irinst, DetectorInstruction):
-                args = irinst.get_args()
+                args = irinst.args
                 args_measure_indices = [dest_to_measure_index[arg] for arg in args]
                 parity_match_group.append(args_measure_indices)
 
 
             elif isinstance(irinst, ObservableInstruction):
-                args = irinst.get_args()
+                args = irinst.args
                 args_indices = [dest_to_measure_index[arg] for arg in args]
                 observable_parity_group.append(args_indices)
 
 
-        self._circuit.set_parityMatchGroup(parity_match_group)
-        self._circuit.set_observable(observable_parity_group[0])
+        self._circuit.parityMatchGroup=parity_match_group
+        self._circuit.observable=observable_parity_group[0]
         self._circuit.compile_detector_and_observable()
         self._stimcirc = self._circuit._stimcircuit
-
 
 
 
@@ -454,7 +550,9 @@ def test_commute():
 
 
 if __name__ == "__main__":
+    noise_model = NoiseModel(error_rate=0.001)
     qeccirc= QECStab(n=5,k=1,d=3)
+    qeccirc.noisemodel = noise_model
     #Specify your stabilizers
     # Stabilizer generators
     qeccirc.add_stab("XZZXI")
@@ -463,8 +561,8 @@ if __name__ == "__main__":
     qeccirc.add_stab("ZXIXZ")
     qeccirc.set_logical_Z(0, "ZZZZZ")
     #Set stabilizer parity measurement scheme, round of repetition
-    qeccirc.set_scheme("Standard") 
-    qeccirc.set_rounds(2)
+    qeccirc.scheme="Standard"
+    qeccirc.rounds=2
     qeccirc.construct_circuit()
-    stim_circuit = qeccirc.get_stim_circuit()
+    stim_circuit = qeccirc.stimcirc
     print(stim_circuit)

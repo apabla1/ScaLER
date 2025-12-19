@@ -15,10 +15,18 @@ pauliNoise_ = ["I","X", "Y", "Z"]
 pauliNoiseindices={"I":0,"X":1, "Y":2, "Z":3}
 
 
-class SingeQGate:
+class SingleQGate:
     def __init__(self, gateindex, qubitindex):
         self._name = oneQGate_[gateindex]
         self._qubitindex = qubitindex
+
+    @property
+    def qubitindex(self):
+        return self._qubitindex
+
+    @property
+    def name(self):
+        return self._name
 
     def __str__(self):
         return self._name + "[" + str(self._qubitindex) + "]"
@@ -29,6 +37,19 @@ class TwoQGate:
         self._name = twoQGate_[gateindex]
         self._control = control
         self._target = target
+
+    @property
+    def control(self):
+        return self._control
+
+    @property
+    def target(self):
+        return self._target
+
+    @property
+    def name(self):
+        return self._name
+
 
     def __str__(self):
         return self._name + "[" + str(self._control) + "," + str(self._target)+ "]"
@@ -41,8 +62,12 @@ class pauliNoise:
         self._qubitindex = qubitindex
         self._noisetype=0
 
+    @property
+    def noisetype(self):
+        return self._noisetype
 
-    def set_noisetype(self, noisetype):
+    @noisetype.setter
+    def noisetype(self, noisetype):
         self._noisetype=noisetype
 
 
@@ -56,6 +81,10 @@ class Measurement:
         self._qubitindex = qubitindex
         self._measureindex=measureindex
 
+    @property
+    def qubitindex(self):
+        return self._qubitindex
+
     def __str__(self):
         return self._name + "[" + str(self._qubitindex) + "]"
 
@@ -64,6 +93,10 @@ class Reset:
     def __init__(self, qubitindex):
         self._name="R"
         self._qubitindex = qubitindex
+
+    @property
+    def qubitindex(self):
+        return self._qubitindex
 
     def __str__(self):
         return self._name + "[" + str(self._qubitindex) + "]"
@@ -101,44 +134,89 @@ class CliffordCircuit:
 
         #self._error_channel
 
+    @property
+    def error_rates(self):
+        return self._error_rates
+    
+    @error_rates.setter
+    def error_rates(self, error_rates):
+        self._error_rates = error_rates
+
+    @property
+    def gatelists(self):
+        return self._gatelists
+
+
+    @property
+    def qubitnum(self):
+        return self._qubit_num
+
+
+    @qubitnum.setter
+    def qubitnum(self, qubit_num):
+        self._qubit_num = qubit_num
 
     def get_measIdx_to_parityIdx(self,measIdx):
         return self._measIdx_to_parityIdx[measIdx]
 
 
-    def set_stim_str(self, stim_str):
+    @property
+    def stim_str(self):
+        return self._stim_str
+
+
+    @stim_str.setter
+    def stim_str(self, stim_str):
         self._stim_str=stim_str
 
 
-    def set_error_rate(self, error_rate):
+    @property
+    def error_rate(self):
+        return self._error_rate
+
+    @error_rate.setter
+    def error_rate(self, error_rate):
         self._error_rate=error_rate
 
-    def get_stim_circuit(self):
+    @property
+    def stimcircuit(self):
         return self._stimcircuit
 
 
-    def set_observable(self, observablemeasurements):
+    @stimcircuit.setter
+    def stimcircuit(self, stim_circuit):
+        self._stimcircuit=stim_circuit
+
+    @property
+    def observable(self):
+        return self._observable
+    
+    @observable.setter
+    def observable(self, observablemeasurements):
         self._observable=observablemeasurements
 
 
-    def get_observable(self):
-        return self._observable
-
-
-    def set_parityMatchGroup(self, parityMatchGroup):
-        self._parityMatchGroup=parityMatchGroup
-
-    def get_parityMatchGroup(self):
+    @property
+    def parityMatchGroup(self):
         return self._parityMatchGroup
 
-    def get_qubit_num(self):
-        return self._qubit_num
-    
-    def get_totalnoise(self):
-        return self._totalnoise
+    @parityMatchGroup.setter
+    def parityMatchGroup(self, parityMatchGroup):
+        self._parityMatchGroup=parityMatchGroup
 
-    def get_totalMeas(self):
+
+    @property
+    def qubit_num(self):
+        return self._qubit_num
+
+    @property
+    def totalnoise(self):
+        return self._totalnoise
+    
+    @property
+    def totalMeas(self):
         return self._totalMeas
+
 
     '''
     Read the circuit from a file
@@ -182,31 +260,22 @@ class CliffordCircuit:
                     qubits = list(map(int, parts[1:]))
                     
                     if gate_type == "cnot":
-                        self.add_depolarize(qubits[0], qubits[1])
                         self.add_cnot(qubits[0], qubits[1])
                     elif gate_type == "M":
-                        self.add_depolarize(qubits[0])
                         self.add_measurement(qubits[0])
                     elif gate_type == "R":
-                        self.add_depolarize(qubits[0])
                         self.add_reset(qubits[0])
                     elif gate_type == "H":
-                        self.add_depolarize(qubits[0])
                         self.add_hadamard(qubits[0])
                     elif gate_type == "P":
-                        self.add_depolarize(qubits[0])
                         self.add_phase(qubits[0])
                     elif gate_type == "CZ":
-                        self.add_depolarize(qubits[0], qubits[1])
                         self.add_cz(qubits[0], qubits[1])
                     elif gate_type == "X":
-                        self.add_depolarize(qubits[0])
                         self.add_paulix(qubits[0])
                     elif gate_type == "Y":
-                        self.add_depolarize(qubits[0])
                         self.add_pauliy(qubits[0])
                     elif gate_type == "Z":
-                        self.add_depolarize(qubits[0])
                         self.add_pauliz(qubits[0])
                     else:
                         raise ValueError(f"Unknown gate type: {gate_type}")
@@ -389,12 +458,12 @@ class CliffordCircuit:
 
 
     def add_hadamard(self, qubit):      
-        self._gatelists.append(SingeQGate(oneQGateindices["H"], qubit))
+        self._gatelists.append(SingleQGate(oneQGateindices["H"], qubit))
         self._stimcircuit.append("H", [qubit])
 
 
     def add_phase(self, qubit):         
-        self._gatelists.append(SingeQGate(oneQGateindices["P"], qubit))
+        self._gatelists.append(SingleQGate(oneQGateindices["P"], qubit))
         self._stimcircuit.append("S", [qubit])
 
     def add_cz(self, qubit1, qubit2):
@@ -402,15 +471,15 @@ class CliffordCircuit:
 
 
     def add_paulix(self, qubit):
-        self._gatelists.append(SingeQGate(oneQGateindices["X"], qubit))
+        self._gatelists.append(SingleQGate(oneQGateindices["X"], qubit))
         self._stimcircuit.append("X", [qubit])
 
     def add_pauliy(self, qubit):
-        self._gatelists.append(SingeQGate(oneQGateindices["Y"], qubit))
+        self._gatelists.append(SingleQGate(oneQGateindices["Y"], qubit))
         self._stimcircuit.append("Y", [qubit])
 
     def add_pauliz(self, qubit):
-        self._gatelists.append(SingeQGate(oneQGateindices["Z"], qubit))
+        self._gatelists.append(SingleQGate(oneQGateindices["Z"], qubit))
         self._stimcircuit.append("Z", [qubit])
 
 
@@ -489,7 +558,7 @@ class CliffordCircuit:
                 elif gate._name == "CZ":
                     line = "cz q[{}] | q[{}];".format(gate._target, gate._control)
                 lines.append(line)
-            elif isinstance(gate, SingeQGate):
+            elif isinstance(gate, SingleQGate):
                 # Single-qubit gate.
                 if gate._name == "H":
                     line = "h q[{}];".format(gate._qubitindex)
