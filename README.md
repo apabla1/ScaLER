@@ -172,6 +172,7 @@ for w in range(1, num_noise):
 📌 TODO (Roadmap)
 
 - [x] Support installation via `pip install`
+- [ ] Get rid of Boost package, use binary representation
 - [ ] Support LDPC code and LDPC code decoder
 - [ ] Compatible with Qiskit
 - [ ] SIMD support and compare with STIM
