@@ -95,6 +95,7 @@ class NoiseModel:
         
         num_qubits = clifford_circuit.qubitnum
         new_circuit = CliffordCircuit(num_qubits)
+
         new_circuit.error_rate = self._error_rate
         gate_list = clifford_circuit.gatelists
 
@@ -152,6 +153,11 @@ class NoiseModel:
                     new_circuit.add_depolarize(gate.qubitindex)
                 new_circuit.add_reset(gate.qubitindex)
                 # Placeholder for adding noise after reset
+
+
+        new_circuit.parityMatchGroup=clifford_circuit.parityMatchGroup
+        new_circuit.observable=clifford_circuit.observable
+        new_circuit.compile_detector_and_observable()
 
         return new_circuit
 

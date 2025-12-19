@@ -243,7 +243,7 @@ class symbolicLER:
                 if j > MAX_weight:
                     continue
 
-                print("MAX_I=",MAX_I,"i=",i,"j=",j)
+                #print("MAX_I=",MAX_I,"i=",i,"j=",j)
                 for vec_idx in range(self._total_detector_outcome):
 
                     vec = idx_to_vec(vec_idx,col_size)

@@ -14,7 +14,7 @@ class QEPGpython:
         self._circuit = circuit 
         self._total_meas=self._circuit._totalMeas
         self._total_noise=self._circuit._totalnoise
-        self._propMatrix=np.zeros((3*self._total_noise,len(self._circuit.get_parityMatchGroup())+1), dtype='uint8')
+        self._propMatrix=np.zeros((3*self._total_noise,len(self._circuit.parityMatchGroup)+1), dtype='uint8')
 
 
 
@@ -23,7 +23,7 @@ class QEPGpython:
         #Keep track of the effect of X,Y,Z back propagation
 
 
-        column_size=len(self._circuit.get_parityMatchGroup())+1
+        column_size=len(self._circuit.parityMatchGroup)+1
         current_x_prop=np.zeros((nqubit,column_size), dtype='uint8')
         current_y_prop=np.zeros((nqubit,column_size), dtype='uint8')
         current_z_prop=np.zeros((nqubit,column_size), dtype='uint8')
@@ -59,7 +59,7 @@ class QEPGpython:
                 measureindex=current_meas_index
 
                 qindex=gate._qubitindex
-                if(measureindex in self._circuit.get_observable()):
+                if(measureindex in self._circuit.observable):
                     current_x_prop[qindex][column_size-1]=1
                     current_y_prop[qindex][column_size-1]=1
 
