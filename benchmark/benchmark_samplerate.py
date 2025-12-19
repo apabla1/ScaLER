@@ -151,11 +151,8 @@ def plot_speed_comparison():
     # Layout adjustment
     fig.tight_layout()
 
-    # Save the annotated figure
-    output_path = 'sampling_time_comparison_annotated.png'
-    fig.savefig(output_path, dpi=300)
-
-    output_path
+    # Show figure
+    plt.show()
 
 
 

@@ -2,9 +2,9 @@
 Surface code array for Z error
 Author: A.W
 '''
-from LERcalc.stimparser import *
+from scalerqec.stimparser import rewrite_stim_code
 from pathlib import Path
-
+import stim
 
 def square_3_circ(error_rate: float, rounds: int, distance : int = 3) -> str:
     def generate_dot(w: int, h: int) -> str:
@@ -352,5 +352,8 @@ if __name__ == '__main__':
     # filepath="C:/Users/username/Documents/Sampling/stimprograms/square/square23"
     # generate_circuit(filepath,23)  
 
-    filepath="C:/Users/username/Documents/Sampling/stimprograms/square/square25"
+    from pathlib import Path
+    script = Path(__file__).resolve().parent
+    filepath = script / "square" / "square25"
+    # [script directory]/hexagon/hexagon21
     generate_circuit(filepath,25)  

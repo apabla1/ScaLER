@@ -12,7 +12,6 @@ def generate_all_repetition_benchmark():
 
     tmp=stimLERcalc()
 
-
     shots3=1000000
     filepath="C:/Users/username/Documents/Sampling/stimprograms/repetition/repetition3"
     ler=tmp.calculate_LER_from_file(shots3,filepath,p)

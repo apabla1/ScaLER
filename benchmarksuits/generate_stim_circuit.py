@@ -1,5 +1,5 @@
 import stim
-from scaler.stimparser import rewrite_stim_code
+from scalerqec.stimparser import rewrite_stim_code
 from pathlib import Path
 
 

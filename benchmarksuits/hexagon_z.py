@@ -5,8 +5,9 @@ Author: A.W
 
 from typing import Callable
 import os
-from LERcalc.stimparser import *
+from scalerqec.stimparser import rewrite_stim_code
 from pathlib import Path
+import stim
 
 def hexagon_3_circ(error_rate: float, rounds: int, distance : int = 3) -> str:
     
@@ -375,14 +376,17 @@ if __name__ == '__main__':
 
     # filepath="C:/Users/username/Documents/Sampling/stimprograms/hexagon/hexagon19"
     # generate_circuit(filepath,19)  
-
-    filepath="C:/Users/username/Documents/Sampling/stimprograms/hexagon/hexagon21"
+    
+    from pathlib import Path
+    script = Path(__file__).resolve().parent
+    filepath = script / "hexagon" / "hexagon21"
+    # [script directory]/hexagon/hexagon21
     generate_circuit(filepath,21)  
 
-    filepath="C:/Users/username/Documents/Sampling/stimprograms/hexagon/hexagon23"
+    filepath = script / "hexagon" / "hexagon23"
     generate_circuit(filepath,23)   
 
-    filepath="C:/Users/username/Documents/Sampling/stimprograms/hexagon/hexagon25"
+    filepath = script / "hexagon" / "hexagon25"
     generate_circuit(filepath,25)  
 
     # filepath="C:/Users/username/Documents/Sampling/stimprograms/hexagon/hexagon27"
