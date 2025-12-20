@@ -1,6 +1,6 @@
 
-from ..qepg import compile_QEPG, return_samples_many_weights_separate_obs_with_QEPG, return_samples_with_fixed_QEPG
-from ..Clifford.clifford import *
+from scalerqec.qepg import compile_QEPG, return_samples_many_weights_separate_obs_with_QEPG, return_samples_with_fixed_QEPG
+from scalerqec.Clifford.clifford import *
 import math
 import pymatching
 from scipy.optimize import curve_fit
@@ -253,7 +253,7 @@ class stratified_Scurve_LERcalc:
         self._maxw=10000000000000
         """
         self._saturatew is the weight of the subspace where the 
-        logical error get satureated
+        logical error get saturated
         """
         self._saturatew=10000000000000       
         self._has_logical_errorw=0
@@ -956,9 +956,6 @@ class stratified_Scurve_LERcalc:
             print(self._ground_subspace_LE_count)
             print(self._ground_subspace_sample_used)
         print("Samples used:{}".format(self._ground_sample_used))
-
-
-
 
     def calc_logical_error_rate_after_curve_fitting(self):
         #self.fit_Scurve()

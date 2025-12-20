@@ -159,8 +159,8 @@ class symbolicLER:
 
         print("Total detector outcome: ", 1<<self._num_detector)
         for i in range(0,1<<self._num_detector):
-            print("i=",i)
-            print(1<<self._num_detector)
+            #print("i=",i)
+            #print(1<<self._num_detector)
             # Convert the integer to a list of booleans
             bool_list = idx_to_bool_list(i, self._num_detector)
             # Print the list of booleans
@@ -326,7 +326,7 @@ class symbolicLER:
         Following steps are included:
              Step1:   Parse the circuit from the file, inject depolarization noise
              Step2:   Compile the STIM detector graph, generate the entire prediction table
-             Stem3:   Construct the QEPG graph
+             Step3:   Construct the QEPG graph
              Step4:   Calculate all row indices in the table that will cause logical error
              Step5:   Use dynamic algorithm to calculate the probability of measuring any possible outcomes
              Step6:   Sum up all probability in the row with logical error
