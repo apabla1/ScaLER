@@ -133,6 +133,69 @@ o0 = Parity c4
 
 
 
+# LogiQ- A high level fault-tolerant quantum programming language
+
+We introduce LogiQ which support users to define their own logical QEC block and implement logical Clifford+T operations.
+
+```python
+Type surface:
+    The stabilizers should be a function of d
+    This type describe the stabilizer structure.
+
+surface q1 [n1,k1,d1]   # The first block of Surface code
+surface q2 [n2,k2,d2]   # The second block of Surface code
+surface t0 [n3,k3,d3]   # magic T state block
+
+q1[0] = LogicH q1[0]
+
+t0 = Distill15to1_T[d=25]     # returns a magic_T handle
+InjectT q1[0], t0
+
+q2[1] = LogicCNOT q1[0], q2[1]
+
+c1 = LogicMeasure q1[0]
+c2 = LogicMeasure q2[1]
+```
+
+
+# MagicQ- A high level fault-tolerant quantum programming for dynamic protocol with Post-selection
+
+We introduce MagicQ. One main purpose for MagicQ is to allow user to construct Magic state factory themselves. MagicQ also has the full power to express all code-switching protocol.
+
+
+
+protocol Distill15to1_T(surface f, int d):
+  Repeat:
+
+      # ---- X-type stabilizer checks ----
+      c_x1 = LogicProp IIIIIIIXXXXXXXX
+      c_x2 = LogicProp IIIXXXXIIIIXXXX
+      c_x3 = LogicProp IXXIIXXIIXXIIXX
+      c_x4 = LogicProp XIXIXIXIXIXIXIX
+
+      # ---- Z-type stabilizer checks ----
+      c_z1  = LogicProp IIIIIIIIZZZZZZZZ
+      c_z2  = LogicProp IIIZZZZIIIIZZZZ
+      c_z3  = LogicProp IZZIIZZIIZZIIZZ
+      c_z4  = LogicProp ZIZIZIZIZIZIZIZ
+      c_z12 = LogicProp IIIIIIIIIIZZZZ
+      c_z13 = LogicProp IIIIIIIIZZIIIZZ
+      c_z14 = LogicProp IIIIIIIIZIZIZIZ
+      c_z23 = LogicProp IIIIIZZIIIIIIZZ
+      c_z24 = LogicProp IIIIZIZIIIIIZIZ
+      c_z34 = LogicProp IIZIIIZIIIZIIIZ
+
+      Success = c_x1 == 0 && c_x2 == 0 && c_x3 == 0 && c_x4 == 0 &&
+                c_z1 == 0 && c_z2 == 0 && c_z3 == 0 && c_z4 == 0 &&
+                c_z12 == 0 && c_z13 == 0 && c_z14 == 0 &&
+                c_z23 == 0 && c_z24 == 0 && c_z34 == 0
+      Until Success
+
+      return 
+
+
+
+
 1️⃣ Main method: Test Logical by Statefied fault-sampling and curve fitting:
 
 
