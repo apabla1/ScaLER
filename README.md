@@ -163,7 +163,7 @@ c2 = LogicMeasure q2[1]
 We introduce MagicQ. One main purpose for MagicQ is to allow user to construct Magic state factory themselves. MagicQ also has the full power to express all code-switching protocol.
 
 
-
+```python
 protocol Distill15to1_T(surface f, int d):
   Repeat:
 
@@ -191,8 +191,8 @@ protocol Distill15to1_T(surface f, int d):
                 c_z23 == 0 && c_z24 == 0 && c_z34 == 0
       Until Success
 
-      return 
-
+      return
+```
 
 
 
